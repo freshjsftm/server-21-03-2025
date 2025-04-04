@@ -1,1 +1,1 @@
-GET http://localhost:3000/homeworks HTTP/1.1
+GET http://localhost:3000/homeworks?deadline=2025-04-04 HTTP/1.1

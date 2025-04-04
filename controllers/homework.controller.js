@@ -11,7 +11,18 @@ module.exports.createHomework = async (req, res, next) => {
 
 module.exports.findAllHomeworks = async (req, res, next) => {
   try {
-    const homeworks = await Homework.find();
+    const { subject, task, deadline } = req.query;
+    const filter = {};
+    if (subject) {
+      filter.subject = new RegExp(subject, 'i');
+    }
+    if (task) {
+      filter.task = new RegExp(task, 'i');
+    }
+    if (deadline) {
+      filter.deadline = { $lte: deadline };
+    }
+    const homeworks = await Homework.find(filter);
     res.status(200).send({ data: homeworks });
   } catch (error) {
     next(error);
@@ -29,14 +40,26 @@ module.exports.findHomeworkById = async (req, res, next) => {
     next(error);
   }
 };
+
 module.exports.updateHomeworkById = async (req, res, next) => {
   try {
+    const updatedHomework = await Homework.findByIdAndUpdate(
+      req.params.idHomework,
+      req.body,
+      { new: true }
+    );
+    res.status(200).send({ data: updatedHomework });
   } catch (error) {
     next(error);
   }
 };
+
 module.exports.deleteHomeworkById = async (req, res, next) => {
   try {
+    const deletedHomework = await Homework.findByIdAndDelete(
+      req.params.idHomework
+    );
+    res.status(200).send({ data: deletedHomework });
   } catch (error) {
     next(error);
   }
