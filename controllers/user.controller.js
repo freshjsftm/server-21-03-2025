@@ -1,3 +1,4 @@
+const createError = require('http-errors');
 const User = require('../models/User');
 
 module.exports.createUser = async (req, res, next) => {
@@ -5,7 +6,7 @@ module.exports.createUser = async (req, res, next) => {
     const newUser = await User.create(req.body);
     res.status(201).send({ data: newUser });
   } catch (error) {
-    next(error);
+    next(createError(400, error.message));
   }
 };
 
@@ -40,12 +41,11 @@ module.exports.findUserById = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.idUser);
     if (!user) {
-      // створити помилку і прокинути її next
-      //return res.status(404).send({ data: 'user not found' });
+      return next(createError(404, 'user not found'));
     }
     res.status(200).send({ data: user });
   } catch (error) {
-    next(error);
+    next(createError(400, error.message));
   }
 };
 
@@ -57,11 +57,11 @@ module.exports.updateUserById = async (req, res, next) => {
       { new: true }
     );
     if (!updatedUser) {
-      return res.status(404).send({ data: 'user not found' });
+      return next(createError(404, 'user not found'));
     }
     res.status(200).send({ data: updatedUser });
   } catch (error) {
-    next(error);
+    next(createError(400, error.message));
   }
 };
 
@@ -69,10 +69,10 @@ module.exports.deleteUserById = async (req, res, next) => {
   try {
     const deletedUser = await User.findByIdAndDelete(req.params.idUser);
     if (!deletedUser) {
-      return res.status(404).send({ data: 'user not found' });
+      return next(createError(404, 'user not found'));
     }
     res.status(200).send({ data: deletedUser });
   } catch (error) {
-    next(error);
+    next(createError(400, error.message));
   }
 };
