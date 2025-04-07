@@ -40,7 +40,8 @@ module.exports.findUserById = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.idUser);
     if (!user) {
-      return res.status(404).send({ data: 'user not found' });
+      // створити помилку і прокинути її next
+      //return res.status(404).send({ data: 'user not found' });
     }
     res.status(200).send({ data: user });
   } catch (error) {

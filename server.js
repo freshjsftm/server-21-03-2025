@@ -1,5 +1,5 @@
-const http = require('http'); // core modules
-const app = require('./app'); // local own modules
+const http = require('http'); 
+const app = require('./app'); 
 const connectDB = require('./config/db');
 
 connectDB();
