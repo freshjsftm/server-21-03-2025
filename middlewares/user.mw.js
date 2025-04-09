@@ -11,3 +11,13 @@ module.exports.validateUser = (userSchema) => async (req, res, next) => {
     next(createError(400, error.message));
   }
 };
+
+module.exports.validateUserQuery = (userQuerySchema) => async (req, res, next) => {
+  try {
+    req.query = await userQuerySchema.validate(req.query);
+    next();
+  } catch (error) {
+    next(createError(400, error.message));
+  }
+};
+

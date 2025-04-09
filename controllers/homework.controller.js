@@ -34,7 +34,7 @@ module.exports.findHomeworkById = async (req, res, next) => {
   try {
     const homework = await Homework.findById(req.params.idHomework);
     if (!homework) {
-      return next(404, 'homework not found');
+      return next(createError(404, 'homework not found'));
     }
     res.status(200).send({ data: homework });
   } catch (error) {
@@ -50,7 +50,7 @@ module.exports.updateHomeworkById = async (req, res, next) => {
       { new: true }
     );
     if (!updatedHomework) {
-      return next(404, 'homework not found');
+      return next(createError(404, 'homework not found'));
     }
     res.status(200).send({ data: updatedHomework });
   } catch (error) {
@@ -64,7 +64,7 @@ module.exports.deleteHomeworkById = async (req, res, next) => {
       req.params.idHomework
     );
     if (!deletedHomework) {
-      return next(404, 'homework not found');
+      return next(createError(404, 'homework not found'));
     }
     res.status(200).send({ data: deletedHomework });
   } catch (error) {

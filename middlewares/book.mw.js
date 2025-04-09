@@ -11,3 +11,13 @@ module.exports.validateBook = (bookSchema) => async (req, res, next) => {
     next(createError(400, error.message));
   }
 };
+
+module.exports.validateBookQuery =
+  (queryBookSchema) => async (req, res, next) => {
+    try {
+      req.query = await queryBookSchema.validate(req.query);
+      next();
+    } catch (error) {
+      next(createError(400, error.message));
+    }
+  };
