@@ -1,4 +1,4 @@
-PATCH http://localhost:3000/users/67f3e4477d85c69e868186d6 HTTP/1.1
+PATCH http://localhost:3000/users/67f680611818e6b0f7ee225c HTTP/1.1
 Content-Type: application/json
 
 {
