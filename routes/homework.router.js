@@ -6,11 +6,12 @@ const {
   updateHomeworkById,
   deleteHomeworkById,
 } = require('../controllers/homework.controller');
+const { paginate } = require('../middlewares/pagination.mw');
 
 const homeworkRouter = express.Router();
 
 homeworkRouter.post('/', createHomework);
-homeworkRouter.get('/', findAllHomeworks);
+homeworkRouter.get('/',paginate, findAllHomeworks);
 homeworkRouter.get('/:idHomework', findHomeworkById);
 homeworkRouter.patch('/:idHomework', updateHomeworkById);
 homeworkRouter.delete('/:idHomework', deleteHomeworkById);

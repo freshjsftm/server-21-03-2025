@@ -12,6 +12,7 @@ module.exports.createBook = async (req, res, next) => {
 
 module.exports.findAllBooks = async (req, res, next) => {
   try {
+    const {limit, skip} = req.pagination;
     const { title, author, genre, minYear, maxYear, available } = req.query;
     const filter = {};
 
@@ -38,7 +39,7 @@ module.exports.findAllBooks = async (req, res, next) => {
       }
     }
 
-    const books = await Book.find(filter);
+    const books = await Book.find(filter).skip(skip).limit(limit);
     res.status(200).send({ data: books });
   } catch (error) {
     next(error);

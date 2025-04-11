@@ -9,11 +9,12 @@ const {
   bookSchemaPost,
   bookSchemaQuery,
 } = require('../validations/book.validation');
+const { paginate } = require('../middlewares/pagination.mw');
 
 const bookRouter = express.Router();
 
 bookRouter.post('/', validateBook(bookSchemaPost), createBook);
-bookRouter.get('/', validateBookQuery(bookSchemaQuery), findAllBooks);
+bookRouter.get('/',paginate, validateBookQuery(bookSchemaQuery), findAllBooks);
 bookRouter.get('/:idBook', findBookById);
 //bookRouter.patch('/:idBook' , validateBook(bookSchemaUpdate) , updateBookById)
 
