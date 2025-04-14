@@ -4,7 +4,11 @@ const {
   findAllBooks,
   findBookById,
 } = require('../controllers/book.controller');
-const { validateBook, validateBookQuery } = require('../middlewares/book.mw');
+const {
+  validateBook,
+  validateBookQuery,
+  buildBooksFilter,
+} = require('../middlewares/book.mw');
 const {
   bookSchemaPost,
   bookSchemaQuery,
@@ -14,7 +18,13 @@ const { paginate } = require('../middlewares/pagination.mw');
 const bookRouter = express.Router();
 
 bookRouter.post('/', validateBook(bookSchemaPost), createBook);
-bookRouter.get('/',paginate, validateBookQuery(bookSchemaQuery), findAllBooks);
+bookRouter.get(
+  '/',
+  paginate,
+  validateBookQuery(bookSchemaQuery),
+  buildBooksFilter,
+  findAllBooks
+);
 bookRouter.get('/:idBook', findBookById);
 //bookRouter.patch('/:idBook' , validateBook(bookSchemaUpdate) , updateBookById)
 

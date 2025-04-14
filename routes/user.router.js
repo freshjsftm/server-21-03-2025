@@ -6,14 +6,14 @@ const {
   updateUserById,
   deleteUserById,
 } = require('../controllers/user.controller');
-const { validateUser, validateUserQuery } = require('../middlewares/user.mw');
+const { validateUser, validateUserQuery, buildUsersFilter } = require('../middlewares/user.mw');
 const { userSchemaPost, userSchemaUpdate, userSchemaQuery } = require('../validations/user.validation');
 const { paginate } = require('../middlewares/pagination.mw');
 
 const userRouter = express.Router();
 
 userRouter.post('/', validateUser(userSchemaPost) , createUser);
-userRouter.get('/', paginate, validateUserQuery(userSchemaQuery), findAllUsers);
+userRouter.get('/', paginate, validateUserQuery(userSchemaQuery), buildUsersFilter,  findAllUsers);
 userRouter.get('/:idUser', findUserById);
 userRouter.patch('/:idUser',validateUser(userSchemaUpdate), updateUserById); 
 // userRouter.put('/:idUser', updateUserById); 

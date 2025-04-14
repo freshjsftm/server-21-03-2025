@@ -1,22 +1,25 @@
 const yup = require('yup');
+const CONSTANTS = require('../constants');
 
 const bookSchemaPost = yup.object({
-  title: yup.string().trim().min(2).max(255).required(),
-  author: yup.string().trim().min(3).max(64).required(),
-  genre: yup
+  title: yup
     .string()
     .trim()
-    .oneOf([
-      'Fiction',
-      'Non-fiction',
-      'Fantasy',
-      'Science Fiction',
-      'Mystery',
-      'Biography',
-      'History',
-    ])
+    .min(CONSTANTS.BOOK_TITLE_MIN)
+    .max(CONSTANTS.BOOK_TITLE_MAX)
     .required(),
-  year: yup.number().min(1200).max(new Date().getFullYear()).required(),
+  author: yup
+    .string()
+    .trim()
+    .min(CONSTANTS.BOOK_AUTHOR_MIN)
+    .max(CONSTANTS.BOOK_AUTHOR_MAX)
+    .required(),
+  genre: yup.string().trim().oneOf(CONSTANTS.BOOK_LIST_GENRE).required(),
+  year: yup
+    .number()
+    .min(CONSTANTS.BOOK_MIN_YEAR)
+    .max(new Date().getFullYear())
+    .required(),
   available: yup.boolean(),
 });
 

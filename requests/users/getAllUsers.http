@@ -1,1 +1,1 @@
-GET http://localhost:3000/users?page=3 HTTP/1.1
+GET http://localhost:3000/users?page=1&gender=male&login=5 HTTP/1.1
