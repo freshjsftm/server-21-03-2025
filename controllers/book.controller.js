@@ -1,6 +1,15 @@
 const createError = require('http-errors');
 const Book = require('../models/Book');
 
+module.exports.countBooks = async (req, res, next) => {
+  try {
+    const count = await Book.countDocuments(req.filter);
+    res.status(200).send({ data: count });
+  } catch (error) {
+    next(createError(400, error.message));
+  }
+};
+
 module.exports.createBook = async (req, res, next) => {
   try {
     const newBook = await Book.create(req.body);

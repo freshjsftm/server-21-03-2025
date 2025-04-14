@@ -3,6 +3,7 @@ const {
   createBook,
   findAllBooks,
   findBookById,
+  countBooks
 } = require('../controllers/book.controller');
 const {
   validateBook,
@@ -25,6 +26,14 @@ bookRouter.get(
   buildBooksFilter,
   findAllBooks
 );
+
+bookRouter.get(
+  '/count',
+  validateBookQuery(bookSchemaQuery),
+  buildBooksFilter,
+  countBooks
+);
+
 bookRouter.get('/:idBook', findBookById);
 //bookRouter.patch('/:idBook' , validateBook(bookSchemaUpdate) , updateBookById)
 
