@@ -4,7 +4,7 @@ const User = require('../models/User');
 module.exports.usersStatistic = async (req, res, next) => {
   try {
     const stat = await User.aggregate([
-      { $match: { isMale: false } },
+      //{ $match: { isMale: false } },
       {
         $facet: {
           countGender: [{ $group: { _id: '$isMale', count: { $sum: 1 } } }],
@@ -21,11 +21,6 @@ module.exports.usersStatistic = async (req, res, next) => {
         },
       },
     ]);
-    // stat[0].countGender = stat[0].countGender.map((gender) => {
-    //   gender._id = gender._id ? 'male' : 'female';
-    //   gender.count = gender.count;
-    //   return gender;
-    // });
     stat[0].countGender = stat[0].countGender.reduce(
       (acc, gender) => {
         gender._id ? (acc.male = gender.count) : (acc.female = gender.count);

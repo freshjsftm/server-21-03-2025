@@ -3,7 +3,9 @@ const {
   createBook,
   findAllBooks,
   findBookById,
-  countBooks
+  countBooks,
+  booksStatistic,
+  getTopAuthors,
 } = require('../controllers/book.controller');
 const {
   validateBook,
@@ -28,10 +30,24 @@ bookRouter.get(
 );
 
 bookRouter.get(
+  '/top-authors',
+  validateBookQuery(bookSchemaQuery),
+  buildBooksFilter,
+  getTopAuthors
+);
+
+bookRouter.get(
   '/count',
   validateBookQuery(bookSchemaQuery),
   buildBooksFilter,
   countBooks
+);
+
+bookRouter.get(
+  '/stat',
+  validateBookQuery(bookSchemaQuery),
+  buildBooksFilter,
+  booksStatistic
 );
 
 bookRouter.get('/:idBook', findBookById);
